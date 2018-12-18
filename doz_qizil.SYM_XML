@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-5"?>
+
+<CoDeSysSymbolTable>
+	<SymbolHeader>
+		<Version>-1</Version>
+		<ProjectId>11529282</ProjectId>
+		<WorkbenchVersion>2.3.9.40</WorkbenchVersion>
+		<CompilerVersion>2.3.9.40</CompilerVersion>
+	</SymbolHeader>
+	<SymbolTypeList>
+		<TypeSimple TypeId="0" Size="0">BOOL</TypeSimple>
+		<TypeString TypeId="1" Size="16"/>
+		<TypeSimple TypeId="2" Size="4">REAL</TypeSimple>
+		<TypeSimple TypeId="3" Size="2">WORD</TypeSimple>
+	</SymbolTypeList>
+	<SymbolVarList>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="328">.day</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="11">.doz1InGroup</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="12">.doz2InGroup</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="13">.doz3InGroup</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="14">.doz4InGroup</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="15">.dozAuto1</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="16">.dozAuto2</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="17">.dozAuto3</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="18">.dozAuto4</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3040">.dozLowWeightDoz1</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3041">.dozLowWeightDoz2</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3042">.dozLowWeightDoz3</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3043">.dozLowWeightDoz4</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3044">.dozSlide1</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3045">.dozSlide2</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3046">.dozSlide3</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3047">.dozSlide4</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="1" Offset="72">.dozWeight1</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="1" Offset="76">.dozWeight2</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="1" Offset="80">.dozWeight3</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="1" Offset="84">.dozWeight4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="90">.freqChastot1</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="98">.freqChastot2</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="106">.freqChastot3</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="114">.freqChastot4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="92">.freqChastotZadan1</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="100">.freqChastotZadan2</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="108">.freqChastotZadan3</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="116">.freqChastotZadan4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="88">.freqStatus1</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="96">.freqStatus2</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="104">.freqStatus3</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="112">.freqStatus4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="94">.freqTok1</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="102">.freqTok2</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="110">.freqTok3</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="1" Offset="118">.freqTok4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="330">.hour</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="332">.minute</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="326">.month</Var>
+		<Var Type="1" Flags="33554464" Access="98" RefId="2" Offset="12">.outVolt1</Var>
+		<Var Type="1" Flags="33554464" Access="98" RefId="2" Offset="32">.outVolt2</Var>
+		<Var Type="1" Flags="33554464" Access="98" RefId="2" Offset="52">.outVolt3</Var>
+		<Var Type="1" Flags="33554464" Access="98" RefId="2" Offset="72">.outVolt4</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="0">.runChastot1</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="1">.runChastot2</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="2">.runChastot3</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="3">.runChastot4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="334">.sekund</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="0">.speedImpuls1</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="1">.speedImpuls2</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="2">.speedImpuls3</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="3">.speedImpuls4</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="8">.starButton</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="10">.statusKonveyr</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="1" Offset="9">.stopButton</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="348">.taraSpeedDoz1</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="352">.taraSpeedDoz2</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="356">.taraSpeedDoz3</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="360">.taraSpeedDoz4</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="364">.taraVesDoz1</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="368">.taraVesDoz2</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="372">.taraVesDoz3</Var>
+		<Var Type="2" Flags="33554464" Access="98" RefId="2" Offset="376">.taraVesDoz4</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="2236">.taraVesDreyfDoz1</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="2237">.taraVesDreyfDoz2</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="2238">.taraVesDreyfDoz3</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="2239">.taraVesDreyfDoz4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="336">.taskDozSpeed1</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="338">.taskDozSpeed2</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="340">.taskDozSpeed3</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="342">.taskDozSpeed4</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="344">.workMode</Var>
+		<Var Type="3" Flags="33554464" Access="98" RefId="2" Offset="324">.year</Var>
+		<Var Type="0" Flags="33554464" Access="98" RefId="2" Offset="8">.zvonok</Var>
+	</SymbolVarList>
+	<SymbolTaskList/>
+	<SymbolTargetSettings>
+		<MaxNumberOfPOUs>16383</MaxNumberOfPOUs>
+		<Segments>
+			<Segment Area="0" RefId="0" Address="0" Size="1000" Attributes="0"/>
+			<Segment Area="0" RefId="1" Address="1000" Size="8191" Attributes="0"/>
+			<Segment Area="0" RefId="2" Address="9192" Size="8191" Attributes="0"/>
+			<Segment Area="0" RefId="3" Address="17384" Size="4096" Attributes="2"/>
+			<Segment Area="0" RefId="4" Address="21480" Size="131072" Attributes="1"/>
+		</Segments>
+	</SymbolTargetSettings>
+</CoDeSysSymbolTable>

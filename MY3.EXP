@@ -1,0 +1,149 @@
+
+
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '0' *)
+PROGRAM normal
+VAR
+	tmr_t, tmr2, tmr3 : TON;
+	tmr_error1, tmr_error2, tmr_error3 : TON;
+	old_weight : REAL;
+	time_belt : TIME := T#1s;
+	need_speed : REAL;
+	need_percent : REAL;
+	filtr_mV : REAL;
+	need_zadan_tch : REAL;
+	old_speed : REAL;
+	old_zadan_tch : REAL;
+	old_tok_chast : REAL;
+	a : BOOL;
+	surat : REAL;
+	mahraj : REAL;
+	tmp_tok_chast : REAL;
+
+
+END_VAR
+(* @END_DECLARATION := '0' *)
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+alarm_rib();
+do_doz_in_gr_1 := (gruhda_1=TRUE) AND (plc_gruhda=TRUE) AND (status_invert=TRUE) AND (horn=TRUE OR invert_start=TRUE);
+do_doz_in_gr_2 := (gruhda_2=TRUE) AND (plc_gruhda=TRUE) AND (status_invert=TRUE) AND (horn=TRUE OR invert_start=TRUE);
+do_doz_in_gr_3 := (gruhda_3=TRUE) AND (plc_gruhda=TRUE) AND (status_invert=TRUE) AND (horn=TRUE OR invert_start=TRUE);
+do_doz_in_gr_4 := (gruhda_4=TRUE) AND (plc_gruhda=TRUE) AND (status_invert=TRUE) AND (horn=TRUE OR invert_start=TRUE);
+do_doz_in_gr_5 := (gruhda_5=TRUE) AND (plc_gruhda=TRUE) AND (status_invert=TRUE) AND (horn=TRUE OR invert_start=TRUE);
+
+(*
+IF (plc_gruhda = TRUE) THEN
+	 do_doz_in_gr_1 := gruhda_1 ;
+	 do_doz_in_gr_2 := gruhda_2; (* mb_word_00.7 ; *)
+	 do_doz_in_gr_3 := gruhda_3 ;
+	 do_doz_in_gr_4 := gruhda_4 ;
+	 do_doz_in_gr_5 := gruhda_5 ;
+	(*stop();*)
+END_IF;*)
+a := in_group();
+IF (btn_start = TRUE) AND (status_konveyr = FALSE) AND (plc_gruhda = TRUE)  THEN
+	horn := TRUE;
+END_IF;
+IF (in_group() = FALSE)  THEN
+	tmr2(in := TRUE, pt := T#5s);
+	IF (tmr2.Q = TRUE) THEN
+		stop();
+	END_IF;
+ELSE
+	tmr2(in := FALSE, pt := T#0s);
+END_IF;
+
+IF (horn = TRUE) THEN
+	zvon();
+	tok_chast := 6;
+	time_belt := T#1s;
+END_IF;
+IF ( btn_stop = FALSE) OR  (status_konveyr = TRUE) OR (status_invert = FALSE) OR (plc_gruhda = FALSE) OR (a = FALSE) THEN
+     	stop();
+END_IF;
+
+tmr_t(in := TRUE, pt := t#1s);
+
+IF (tmr_t.Q = TRUE) THEN
+	old_tok_chast := tok_chast;
+	old_speed := mb_speed;
+
+	mb_proizvod := (old_weight* mb_speed * 45)/1000; (* 45 = 3600 cek / 80 cm *)
+
+	IF (old_weight > 0 AND  mb_speed > 0) THEN
+		(*tok_chast := ((tok_chast - 4) * mb_zadan_tch *1000) / (45 * old_weight * mb_speed) + 4;*)
+		surat := (old_tok_chast - 4) * mb_zadan_tch *1000;
+		mahraj := (45 * old_weight * mb_speed);
+		tmp_tok_chast := (surat /mahraj ) + 4;
+
+		IF((tmp_tok_chast - old_tok_chast) > 0.5) THEN
+			tmp_tok_chast := old_tok_chast + 0.5;
+		END_IF;
+		IF((tmp_tok_chast - old_tok_chast) < - 0.5) THEN
+			tmp_tok_chast := old_tok_chast - 0.5;
+		END_IF;
+		IF (tmp_tok_chast < 4) THEN
+			tmp_tok_chast := 4;
+		END_IF;
+		IF (tmp_tok_chast > 20) THEN
+			tmp_tok_chast := 20;
+		END_IF;
+			tok_chast := tmp_tok_chast;
+			old_weight := mb_weight;
+
+	ELSE
+		tmp_tok_chast := 6;
+		old_weight := mb_weight;
+	END_IF;
+
+	tmr_t(in := FALSE);
+END_IF;
+IF (plc_gruhda = TRUE) THEN
+	 do_doz_in_gr_1 := gruhda_1 ;
+	 do_doz_in_gr_2 := gruhda_2; (* mb_word_00.7 ; *)
+	 do_doz_in_gr_3 := gruhda_3 ;
+	 do_doz_in_gr_4 := gruhda_4 ;
+	 do_doz_in_gr_5 := gruhda_5 ;
+	(*stop();*)
+END_IF;
+tmr3(in := TRUE, pt := T#1s);
+IF (tmr3.Q = TRUE) THEN
+	filtr_mV :=  mV_7016;
+	tmr3(in := FALSE);
+END_IF;
+
+IF ((BOOL_TO_INT(gruhda_1) + BOOL_TO_INT(gruhda_2) +  BOOL_TO_INT(gruhda_3) + BOOL_TO_INT(gruhda_4) + BOOL_TO_INT(gruhda_5)) < 2) THEN
+	error_code.3 := FALSE;
+	stop(); (*Agar guruhda bitta komponent bo'lsa to'xtat*)
+END_IF;
+
+IF (mb_weight < 50 )  THEN
+	tmr_error1(in := TRUE, pt := T#10s);
+	error_code.6 := TRUE;
+ELSE
+	tmr_error1(in := FALSE);
+END_IF;
+IF (tmr_error1.Q = TRUE) THEN
+	stop();
+	tmr_error1(in := FALSE);
+END_IF;
+
+(*
+IF (mb_avr_proizvod_tch / mb_zadan_tch > 0.7) THEN
+	tmr_error2(in := TRUE, pt := T#10s);
+	error_code.7 := TRUE;
+ELSE
+	tmr_error2(in := FALSE);
+END_IF;
+IF (tmr_error2.Q = TRUE) THEN
+	stop();
+END_IF;*)
+
+
+
+
+
+
+END_PROGRAM

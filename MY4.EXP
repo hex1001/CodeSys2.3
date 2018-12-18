@@ -1,0 +1,106 @@
+
+
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK PD_PWM_REG
+VAR_INPUT
+	start : BOOL;
+	milliSekund : WORD := 1000;
+
+	setPointValue : REAL;
+	actualValue :REAL;
+	delta : REAL := 0.2;
+	maxOutValue : REAL;
+	minOutValue : REAL;
+	deltaOtklonOUT : REAL := 50;
+END_VAR
+VAR_OUTPUT
+	out4_20Real: REAL; (*4-20 mA *)
+	out0_20Real: REAL;
+	outBoolPWM_ON : BOOL;
+	outBoolPWM_OFF : BOOL;
+	currentReal : REAL;
+END_VAR
+VAR
+	tmr_t : TON;
+	oldActualValue :REAL;
+	oldOutReal :REAL;
+	linTraf_4_20, linTraf_0_20, linTraf_PWM_ON, linTraf_PWM_OFF : LIN_TRAFO;
+	blinkON, blinkOFF : BLINK;
+	outBoolPWM_ON_WORD : REAL;
+	outBoolPWM_OFF_WORD : REAL;
+	begin:BOOL := FALSE;
+END_VAR
+(* @END_DECLARATION := '0' *)
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+IF(begin = FALSE) THEN
+	currentReal := maxOutValue * 0.50;
+	begin := TRUE;
+END_IF;
+
+tmr_t(in := TRUE, pt := t#1ms * milliSekund);
+
+IF (tmr_t.Q = TRUE) THEN
+	oldActualValue := actualValue;
+	oldOutReal := currentReal;
+	currentReal := (setPointValue * oldOutReal)/actualValue;
+	IF((currentReal - oldOutReal) > deltaOtklonOUT) THEN
+		currentReal := oldOutReal + deltaOtklonOUT;
+	END_IF;
+	IF((currentReal - oldOutReal) < - deltaOtklonOUT) THEN
+		currentReal := oldOutReal - deltaOtklonOUT;
+	END_IF;
+	currentReal := LIMIT(minOutValue, currentReal, maxOutValue);
+	tmr_t(in := FALSE);
+END_IF;
+linTraf_4_20(
+			IN := currentReal,
+			IN_MAX := maxOutValue,
+			IN_MIN := minOutValue,
+			OUT_MAX := 20,
+			OUT_MIN := 4,
+			OUT => out4_20Real
+		);
+linTraf_0_20(
+			IN := currentReal,
+			IN_MAX := maxOutValue,
+			IN_MIN := minOutValue,
+			OUT_MAX := 20,
+			OUT_MIN := 0,
+			OUT => out0_20Real
+		);
+linTraf_PWM_ON(
+			IN := currentReal,
+			IN_MAX := maxOutValue,
+			IN_MIN := minOutValue,
+			OUT_MAX := maxOutValue,
+			OUT_MIN := minOutValue,
+			OUT => outBoolPWM_ON_WORD
+		);
+linTraf_PWM_OFF(
+			IN := currentReal,
+			IN_MAX := maxOutValue,
+			IN_MIN := minOutValue,
+			OUT_MAX := minOutValue,
+			OUT_MIN := maxOutValue,
+			OUT => outBoolPWM_OFF_WORD
+		);
+blinkON(
+		ENABLE := start,
+		TIMEHIGH := T#1ms * REAL_TO_WORD(outBoolPWM_ON_WORD),
+		TIMELOW := T#1ms * REAL_TO_WORD(maxOutValue - outBoolPWM_ON_WORD)
+		);
+outBoolPWM_ON := blinkON.OUT AND start AND ((setPointValue - actualValue) > delta);
+
+blinkOFF(
+		ENABLE := start,
+		TIMEHIGH := T#1ms * REAL_TO_WORD(maxOutValue - outBoolPWM_OFF_WORD),
+		TIMELOW := T#1ms * REAL_TO_WORD(outBoolPWM_OFF_WORD)
+		);
+outBoolPWM_OFF := blinkOFF.OUT AND start AND ((actualValue - setPointValue) > delta);
+
+
+
+END_FUNCTION_BLOCK

@@ -1,0 +1,94 @@
+
+
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK ANALOGFILTR
+VAR_INPUT
+	vaqt : WORD;
+	inputAnalog : REAL;
+END_VAR
+VAR_OUTPUT
+	analogResult : REAL;
+END_VAR
+VAR
+	tmr_f: TP;
+	sumAnalog : REAL;
+	countOfanalog : DWORD;
+END_VAR
+(* @END_DECLARATION := '0' *)
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+tmr_f(IN := TRUE, PT := T#1s * vaqt);
+IF(tmr_f.Q = TRUE) THEN
+	analogResult := sumAnalog / countOfanalog;
+	sumAnalog := 0;
+	countOfanalog := 1;
+	tmr_f.IN := FALSE;
+ELSE
+	sumAnalog := sumAnalog + inputAnalog;
+	countOfanalog := countOfanalog + 1;
+END_IF;
+END_FUNCTION_BLOCK
+
+
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK HISOBLAGICH
+VAR_INPUT
+	proizvodMgn : REAL;  (* Dozatorning ishlab chiqarish quvvati *)
+	tezlik : REAL;		  (* Dozatorni tezligi *)
+	masofa : REAL;		  (* Dozator roliklari orasidagi masofa santimetrda*)
+END_VAR
+VAR_OUTPUT
+	SUMMA : REAL; (* Jami o'tkazilgan yig'ilgi *)
+END_VAR
+VAR
+	tmrCount: TP;
+	tmrProiz: TP;
+	yuk : REAL; 		  (* berilgan tezlikdagi o'tgan yuk *)
+	proizvodMg : REAL;
+END_VAR
+(* @END_DECLARATION := '0' *)
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+
+tmrCount(IN := tezlik > 0, tmr.PT := T#1s);
+IF(tmrCount.Q = TRUE) THEN
+	SUMMA := SUMMA + proizvodMgn / 3600;
+	tmr(IN := FALSE);
+END_IF;
+END_FUNCTION_BLOCK
+
+
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK PD_REGULYATOR
+VAR_INPUT
+	vaqt : WORD := 1; (* Boshqarish vaqti *)
+	boshlash : BOOL; (*Boshqarishni boshlash*)
+	tezlik : REAL;
+	masofa : REAL; (* Roliklar orasidagi masofa santimetrda *)
+END_VAR
+VAR_OUTPUT
+
+END_VAR
+VAR
+	tmr_t: TP;		(*PD qonun asosida boshqaruv*)
+	eskiTezlik : REAL;
+	capacity: REAL; (* Proizvoditelnost *)
+	eskiOgirlik: REAL;		(*Dozatordagi eski o'g'irlik*)
+END_VAR
+(* @END_DECLARATION := '0' *)
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+tmr_t(IN := TRUE, PT := T#1s * vaqt);
+
+IF(tmr_t.Q = TRUE) THEN
+	eskiTezlik := tezlik;
+	capacity := (eskiOgirlik * tezlik * 3600 / masofa) / 1000;
+	IF(eskiOgirlik > 0 AND )
+END_IF;
+END_FUNCTION_BLOCK
